@@ -5,9 +5,63 @@
 	<title>Document</title>
 	<script src="console.js"></script>
 	<style>
+		html,body,.inputCon,p{
+			padding: 0;
+			margin: 0;
+			width: 100%;
+			background: #000;
+			overflow: hidden;
+			font-size: 18px;
+		}
+		.inputCon {
+			height: 100%;
+			border: none;
+			resize: none;
+			outline: none;
+			display: inline;
+		}
+		.info {
+			color: #0F0;
+		}
+		.warn {
+			color: #F5BD00;
+		}
+		.error {
+			color: #F00;
+		}
 	</style>
 </head>
 <body>
-	
+	<div id="historyWrap">
+		<p id = 'history' ></p>
+	</div>
+	<div id="contentWrap">
+		<textarea name="" class='inputCon info' id="inputCon" cols="30" rows="10" onkeydown='keyAction(event)' spellcheck ='false'></textarea>
+	</div>
+	<script>
+		var inputCon = document.getElementById('inputCon');
+		var userInfo = 'aqiongbei@console /$: ';
+		inputCon.value = userInfo;
+		function keyAction(event) {
+			var key = event.key.toUpperCase();
+			var ctrlKey = event.ctrlKey;
+			var altKey = event.altKey;
+			var shiftKey = event.shiftKey;
+			console.log(event)
+			// disable delete userinfo
+			if (key === 'BACKSPACE' && inputCon.value.length <= userInfo.length ) {
+				event.preventDefault();
+			}
+			// clear
+			if ( ctrlKey && key === 'L') {
+				resetCon(inputCon);
+				event.preventDefault();
+			}
+		}
+		function resetCon(inputCon) {
+			inputCon.value = userInfo;
+			return false;
+		}
+	</script>
 </body>
 </html>

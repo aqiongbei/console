@@ -35,7 +35,7 @@ function _console (con){
 			}
 			index ++;
 		}
-	}, 104)
+	}, 180)
 }
 
 function formatLine(len){
