@@ -36,7 +36,7 @@
 		<p id = 'history' ></p>
 	</div>
 	<div id="contentWrap">
-		<textarea name="" class='inputCon info' id="inputCon" cols="30" rows="10" onkeydown='keyAction(event)' spellcheck ='false'></textarea>
+		<textarea name="" class='inputCon info' id="inputCon" cols="30" rows="10" onkeydown='keyAction(event)' onmouseup='mouseAction(event)' onbeforepaste='clipAction(event)' spellcheck ='false' autofocus></textarea>
 	</div>
 	<script>
 		var inputCon = document.getElementById('inputCon');
@@ -49,14 +49,30 @@
 			var shiftKey = event.shiftKey;
 			console.log(event)
 			// disable delete userinfo
-			if (key === 'BACKSPACE' && inputCon.value.length <= userInfo.length ) {
-				event.preventDefault();
+			if (key === 'BACKSPACE' && (inputCon.value.length <= userInfo.length || inputCon.value === userInfo)) {
+				return event.preventDefault();
 			}
 			// clear
 			if ( ctrlKey && key === 'L') {
 				resetCon(inputCon);
 				event.preventDefault();
 			}
+		}
+		function mouseAction(event) {
+			var cursorStart = inputCon.selectionStart;
+			var cursorEnd = inputCon.selectionEnd;
+			var len = userInfo.length;
+			var conLen = inputCon.value.length;
+			console.log(cursorStart, cursorEnd);
+			console.log(cursorStart < len && cursorEnd <len)
+			if (cursorStart === cursorEnd && (cursorStart < len || cursorEnd <len)) {
+				inputCon.setSelectionRange(conLen, conLen);
+				return event.preventDefault();
+			}
+
+		}
+		function clipAction(event) {
+			console.log('aaa')
 		}
 		function resetCon(inputCon) {
 			inputCon.value = userInfo;
